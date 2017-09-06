@@ -2,7 +2,7 @@ package io.github.abhirojp.myfeed_android.data;
 
 /**
  * Created by abhiroj on 6/9/17.
- * Purpose of the class is to provide a fake data until backend is setup
+ * Purpose of the class is to provide a fake data until backend is setup, for the case: data is essentially the same, but need to fetch it from a backend.
  */
 
 public class FakeData {

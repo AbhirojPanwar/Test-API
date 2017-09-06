@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import io.github.abhirojp.myfeed_android.fragment.FeedListFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -15,5 +17,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.app_name);
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
+
+        getFragmentManager().beginTransaction().add(R.id.feed_container,new FeedListFragment(),FeedListFragment.TAG).commit();
     }
 }

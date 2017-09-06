@@ -9,28 +9,23 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:contentDescription="@string/app_name"
+            android:popupTheme="@style/Base.Theme.AppCompat.Light.DarkActionBar"
             />
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
 
         <FrameLayout
-            android:id="@+id/container"
+            android:id="@+id/feed_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
-    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
