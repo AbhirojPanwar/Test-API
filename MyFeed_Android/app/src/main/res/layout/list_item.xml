@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/item_padding"
+    android:layout_margin="@dimen/list_item_gap"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/api_title"
+        android:text="@string/placeholder_text"
+        android:textAppearance="?android:attr/textAppearanceListItemSecondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:targetApi="lollipop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/api_imageUrl"
+            android:scaleType="centerCrop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/api_text"
+        android:text="@string/placeholder_text"
+        android:paddingTop="@dimen/element_padding"
+        android:paddingBottom="@dimen/element_padding"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/api_mark"
+        android:layout_width="@dimen/mark_button_width"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:text="LIKE"
+         />
+
+        <TextView
+            android:id="@+id/api_name"
+            android:text="@string/from"
+            android:layout_marginLeft="@dimen/button_text_pad"
+            android:layout_marginStart="@dimen/button_text_pad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>
