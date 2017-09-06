@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements OnFeedItemClick{
     private static final String TAG = MainActivity.class.getSimpleName();
     private FragmentManager fragmentManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnFeedItemClick{
         Log.d(TAG,"Display Details");
     //TODO: Dispay Details Screen
         FeedDetailsFragment detailsFragment=FeedDetailsFragment.newInstance(d);
-        getSupportFragmentManager().beginTransaction().replace(R.id.feed_container,detailsFragment,FeedDetailsFragment.TAG).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.feed_container,detailsFragment,FeedDetailsFragment.TAG).addToBackStack(FeedDetailsFragment.TAG).commit();
     }
+    
 }
