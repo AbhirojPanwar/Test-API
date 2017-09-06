@@ -6,6 +6,8 @@ package io.github.abhirojp.myfeed_android.data;
 
 public class DataModel {
 
+    //TODO:- Bind with Retrofit
+    
     private String name;
 
     private String text;
