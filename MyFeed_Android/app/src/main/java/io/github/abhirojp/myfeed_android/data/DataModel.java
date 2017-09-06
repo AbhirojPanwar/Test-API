@@ -1,10 +1,12 @@
 package io.github.abhirojp.myfeed_android.data;
 
+import java.io.Serializable;
+
 /**
  * Created by abhiroj on 6/9/17.
  */
 
-public class DataModel {
+public class DataModel implements Serializable {
 
     //TODO:- Bind with Retrofit
 

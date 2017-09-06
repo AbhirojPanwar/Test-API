@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:contentDescription="@string/app_name"
+            android:elevation="@dimen/material_elevation"
             android:popupTheme="@style/Base.Theme.AppCompat.Light.DarkActionBar"
             />
 
@@ -25,6 +26,7 @@
 
         <FrameLayout
             android:id="@+id/feed_container"
+            android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
