@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnFeedItemClick{
                 fragmentManager.beginTransaction().replace(R.id.feed_container,detailsFragment).addToBackStack(FeedDetailsFragment.TAG).commit();
             }
         }else{
-            fragmentManager.beginTransaction().replace(R.id.feed_container,FeedListFragment.newInstance()).addToBackStack(FeedListFragment.TAG).commit();
+            fragmentManager.beginTransaction().add(R.id.feed_container, FeedListFragment.newInstance()).commit();
         }
     }
 
