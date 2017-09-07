@@ -89,7 +89,6 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         frameLayout.setLayoutParams(params);
 
-        // This is because recycler view tries to recycle the previous holder. This can be the reason of  irrelevant drawing of frame layouts or(presence of past draw)
         // This code ensures that if there is a frame layout then it must be removed and drawn only if satisfies the condition.
         if (holder.rootView.findViewById(R.id.time_club) != null) {
             LinearLayout root = (LinearLayout) holder.rootView;
@@ -101,7 +100,8 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
             time.setText(item.getTime() + "");
             time.setPadding(10, 12, 12, 12);
             time.setTextColor(Color.BLACK);
-            frameLayout.addView(time, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            time.setGravity(Gravity.CENTER);
+            frameLayout.addView(time);
         } else {
             View horizontalDivider = new View(getContext());
             horizontalDivider.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 4));
@@ -114,7 +114,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         root.addView(frameLayout, 0, layoutParams);
 
         holder.api_title.setText(item.getTitle());
-        holder.api_name.setText(item.getName());
+        holder.api_name.setText("From: " + item.getName());
 
         if (holder.child.findViewById(R.id.child_text) != null) {
             holder.child.removeView(holder.child.findViewById(R.id.child_text));

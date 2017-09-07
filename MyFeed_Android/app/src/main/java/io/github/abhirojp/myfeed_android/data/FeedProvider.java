@@ -23,7 +23,7 @@ public class FeedProvider extends ContentProvider {
 
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(authority, FeedContract.PATH_FEED_FAVORITES, FAVORITE); //  "io.github.abhirojp.myfeed_android.data/feedfavorites"
-        uriMatcher.addURI(authority, FeedContract.PATH_FEED_FAVORITES + "/#", FAVORITE_ID);// "io.github.abhirojp.myfeed_android.data/feedfavorites/#4 exmp."
+        uriMatcher.addURI(authority, FeedContract.PATH_FEED_FAVORITES + "/#", FAVORITE_ID);// "io.github.abhirojp.myfeed_android.data/feedfavorites/# to match a number"
         return uriMatcher;
     }
 

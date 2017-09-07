@@ -103,7 +103,7 @@ public class FeedDetailsFragment extends Fragment {
 
 
         detail_title.setText(model.getTitle());
-        detail_name.setText(model.getName());
+        detail_name.setText("From: " + model.getName());
         detail_desc.setText(model.getDescription());
         return view;
     }

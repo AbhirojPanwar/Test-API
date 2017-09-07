@@ -8,8 +8,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -65,6 +69,7 @@ public class FeedListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.instanceState = savedInstanceState;
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -101,6 +106,26 @@ public class FeedListFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_list_frag, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.favorites:
+                Toast.makeText(getContext(), "To implement", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.remove:
+                Toast.makeText(getContext(), "To implement", Toast.LENGTH_LONG).show();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Nullable
     @Override

@@ -1,7 +1,11 @@
 package io.github.abhirojp.myfeed_android;
 
 import android.content.ContentResolver;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.os.Build;
+import android.support.v4.view.ViewCompat;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -38,9 +42,21 @@ public class Utility {
 
     public static void feedPresent(Button b) {
         b.setText("UNLIKE");
+        b.setTextColor(ColorStateList.valueOf(Color.WHITE));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            b.setBackgroundTintList(ColorStateList.valueOf(b.getContext().getResources().getColor(R.color.colorPrimary)));
+        } else {
+            ViewCompat.setBackgroundTintList(b, ColorStateList.valueOf(b.getContext().getResources().getColor(R.color.colorPrimary)));
+        }
     }
 
     public static void feedNotPresent(Button b) {
         b.setText("LIKE");
+        b.setTextColor(ColorStateList.valueOf(b.getContext().getResources().getColor(R.color.colorPrimary)));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            b.setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
+        } else {
+            ViewCompat.setBackgroundTintList(b, ColorStateList.valueOf(Color.LTGRAY));
+        }
     }
 }

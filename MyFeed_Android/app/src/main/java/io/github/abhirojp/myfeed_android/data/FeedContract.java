@@ -25,7 +25,7 @@ public final class FeedContract {
         public static final String COL_TIME = "time";
         public static final String COL_IMGURL = "imageUrl"; // can be blank
         public static final String COL_TITLE = "title";
-        public static final String UID_POS = "position"; // used a unique Id for every row item
+        public static final String UID_POS = "position"; // using position of element in the list as it's UID, as in our case data is not added in the backend.
 
         public static Uri buildUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
