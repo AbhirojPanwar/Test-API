@@ -1,10 +1,9 @@
 package io.github.abhirojp.myfeed_android.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import io.github.abhirojp.myfeed_android.R;
 import io.github.abhirojp.myfeed_android.callback.OnFeedItemClick;
 import io.github.abhirojp.myfeed_android.data.DataModel;
-import io.github.abhirojp.myfeed_android.fragment.FeedListFragment;
-
-import static android.view.View.GONE;
 
 /**
  * Created by abhiroj on 6/9/17.
@@ -71,37 +65,35 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         final DataModel item=getList().get(position);
         holder.api_title.setText(item.getTitle());
         holder.api_name.setText(item.getName());
-        if(checkValue(item.getImageUrl())){
-            final ImageView imageView=new ImageView(getContext());
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            if(checkValue(item.getText()))
-            holder.child.addView(imageView,new ViewGroup.LayoutParams(200, ViewGroup.LayoutParams.WRAP_CONTENT));
-            else{
-                holder.child.addView(imageView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            }
-            Target target=new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    imageView.setImageBitmap(bitmap);
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                }
-            };
-            if(imageView.getDrawable()==null)
-            requestImage(target,item.getImageUrl());
-        }if(checkValue(item.getText())){
-            TextView view1=new TextView(getContext());
-            view1.setTextAppearance(getContext(),android.R.style.TextAppearance_Large);
-            view1.setPadding(5,5,5,5);
-            holder.child.addView(view1,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        // If this is not used, Data shown in list breaks and gets unorderly.
+        if (holder.child.findViewById(R.id.child_text) != null) {
+            holder.child.removeView(holder.child.findViewById(R.id.child_text));
+        }
+        if (holder.child.findViewById(R.id.child_image) != null) {
+            holder.child.removeView(holder.child.findViewById(R.id.child_image));
+        }
+        if (checkValue(item.getText())) {
+            Log.d(TAG, "Text For position " + position);
+            TextView child_text = new TextView(getContext());
+            child_text.setId(R.id.child_text);
+            child_text.setGravity(Gravity.CENTER_VERTICAL);
+            child_text.setTextAppearance(getContext(), android.R.style.TextAppearance_Large);
+            child_text.setPadding(5, 5, 5, 5);
+            child_text.setText(item.getText());
+            holder.child.addView(child_text, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+        if (checkValue(item.getImageUrl())) {
+            Log.d(TAG, "Image For position " + position);
+            ImageView child_image = new ImageView(getContext());
+            child_image.setId(R.id.child_image);
+            child_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            requestImage(child_image, item.getImageUrl());
+            LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(200, 200);
+            if (holder.child.getChildCount() == 1)
+                holder.child.addView(child_image, 0, lp2);
+            else
+                holder.child.addView(child_image, 0, lp1);
         }
         holder.markButton.setOnClickListener(new View.OnClickListener() {
             //TODO: Backend API operations
@@ -122,10 +114,11 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         });
     }
 
-    private void requestImage(Target target,String imageUrl) {
+
+    private void requestImage(ImageView target, String imageUrl) {
     Picasso p=Picasso.with(getContext());
-        p.setDebugging(true);
-        p.load(imageUrl).into(target);
+        p.setIndicatorsEnabled(true);
+        p.load(imageUrl).placeholder(getContext().getResources().getDrawable(R.drawable.placeholder)).into(target);
     }
 
     private boolean checkValue(String text) {

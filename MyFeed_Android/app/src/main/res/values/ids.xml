@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="api_image" type="id">api_image</item>
+    <item name="api_text" type="id">api_text</item>
+    <item name="child_image" type="id">101</item>
+    <item name="child_text" type="id">102</item>
+</resources>

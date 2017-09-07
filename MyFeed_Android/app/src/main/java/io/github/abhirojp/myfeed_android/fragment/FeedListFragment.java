@@ -1,7 +1,6 @@
 package io.github.abhirojp.myfeed_android.fragment;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.github.abhirojp.myfeed_android.API.MyBackendAPI;
 import io.github.abhirojp.myfeed_android.R;
 import io.github.abhirojp.myfeed_android.adapter.FeedListAdapter;
-import io.github.abhirojp.myfeed_android.callback.OnFeedItemClick;
 import io.github.abhirojp.myfeed_android.data.DataModel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,11 +34,26 @@ public class FeedListFragment extends Fragment {
 
      public static final String TAG=FeedListFragment.class.getSimpleName();
     private FeedListAdapter listAdapter;
+    private Bundle instanceState;
+
+    public static FeedListFragment newInstance() {
+        FeedListFragment listFragment = new FeedListFragment();
+        fragtag.put(TAG, listFragment);
+        return listFragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        this.instanceState = savedInstanceState;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // TODO: Make a fresh query if instance State is empty
         Retrofit retrofit=new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build();
 
         MyBackendAPI myBackendAPI=retrofit.create(MyBackendAPI.class);
@@ -59,14 +71,6 @@ public class FeedListFragment extends Fragment {
             }
         });
     }
-
-    public static FeedListFragment newInstance(){
-        FeedListFragment listFragment=new FeedListFragment();
-        fragtag.put(TAG,listFragment);
-        return listFragment;
-    }
-
-
 
     @Nullable
     @Override
