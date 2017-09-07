@@ -25,7 +25,9 @@ Database:- Sqlite3
 ### Run project
     #1 python3 manage.py runserver 192.168.0.104:8000
     #2 make sure your mobile device and workstation are connected to same network
-    #3 Install the apk and run the app
+    #3 Installation url:- https://github.com/AbhirojPanwar/My_Feed/blob/master/MyFeed_Android/app/app-release.apk
+    #4 Install the apk and run the app
+    
     
 ### View Endpoints
     After running the project, use the same IP (192.168.0.104:8000) to view the endpoints
