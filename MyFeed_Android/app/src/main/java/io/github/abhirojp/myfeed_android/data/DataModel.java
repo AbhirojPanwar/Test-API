@@ -2,13 +2,13 @@ package io.github.abhirojp.myfeed_android.data;
 
 import java.io.Serializable;
 
+import retrofit2.http.Path;
+
 /**
  * Created by abhiroj on 6/9/17.
  */
 
 public class DataModel implements Serializable {
-
-    //TODO:- Bind with Retrofit
 
     private String name;
 

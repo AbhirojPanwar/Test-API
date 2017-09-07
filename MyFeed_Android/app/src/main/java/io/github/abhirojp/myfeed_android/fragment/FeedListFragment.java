@@ -13,12 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import io.github.abhirojp.myfeed_android.API.MyBackendAPI;
 import io.github.abhirojp.myfeed_android.R;
 import io.github.abhirojp.myfeed_android.adapter.FeedListAdapter;
 import io.github.abhirojp.myfeed_android.callback.OnFeedItemClick;
 import io.github.abhirojp.myfeed_android.data.DataModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
+import static io.github.abhirojp.myfeed_android.data.Constants.baseUrl;
 import static io.github.abhirojp.myfeed_android.data.Constants.fragtag;
 
 /**
@@ -33,6 +40,23 @@ public class FeedListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Retrofit retrofit=new Retrofit.Builder().baseUrl(baseUrl).build();
+
+        MyBackendAPI myBackendAPI=retrofit.create(MyBackendAPI.class);
+
+        Call<List<DataModel>> request=myBackendAPI.loadData();
+        request.enqueue(new Callback<List<DataModel>>() {
+            @Override
+            public void onResponse(Call<List<DataModel>> call, Response<List<DataModel>> response) {
+                Log.d(TAG,response.message());
+            }
+
+            @Override
+            public void onFailure(Call<List<DataModel>> call, Throwable t) {
+                Log.e(TAG,t.getMessage());
+            }
+        });
     }
 
     public static FeedListFragment newInstance(){
@@ -41,12 +65,14 @@ public class FeedListFragment extends Fragment {
         return listFragment;
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_feedlist,container,false);
         RecyclerView recyclerView=view.findViewById(R.id.recyclable_list);
-        listAdapter=new FeedListAdapter(view.getContext(),getFakeData());
+        listAdapter=new FeedListAdapter(view.getContext());
         recyclerView.setAdapter(listAdapter);
         listAdapter.notifyDataSetChanged();
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

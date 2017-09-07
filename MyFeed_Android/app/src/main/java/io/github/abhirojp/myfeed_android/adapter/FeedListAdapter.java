@@ -31,10 +31,9 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
     private ArrayList<DataModel> dataList;
     private OnFeedItemClick onFeedItemClick;
 
-    public FeedListAdapter(Context context, ArrayList<DataModel> dataList){
+    public FeedListAdapter(Context context){
         Log.d(TAG,"Initalizing");
         this.context=context;
-        this.dataList=dataList;
         onFeedItemClick=(OnFeedItemClick) context;
     }
 
@@ -44,6 +43,12 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         View view=layoutInflater.inflate(R.layout.list_item,parent,false);
         FeedListAdapter.ViewHolder vh=new FeedListAdapter.ViewHolder(view);
         return vh;
+    }
+
+    public void addAPIData(ArrayList<DataModel> d){
+        if(dataList!=null) dataList.clear();
+        dataList.addAll(d);
+        notifyDataSetChanged();
     }
 
     @Override

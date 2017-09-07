@@ -14,5 +14,7 @@ public class Constants {
     public static final String positionForData="1";
     public static final String FRAGMENT_TAG="frag_key";
     public static HashMap<String,Fragment> fragtag=new HashMap<>();
+    // python manage.py runserver @baseUrl to connect it with mobile device.
+    public static final String baseUrl="http://192.168.0.104:8000/";
 
 }
