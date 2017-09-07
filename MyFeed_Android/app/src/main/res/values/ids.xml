@@ -4,4 +4,6 @@
     <item name="api_text" type="id">api_text</item>
     <item name="child_image" type="id">101</item>
     <item name="child_text" type="id">102</item>
+    <item name="detail_text" type="id">1003</item>
+    <item name="detail_image" type="id">1004</item>
 </resources>

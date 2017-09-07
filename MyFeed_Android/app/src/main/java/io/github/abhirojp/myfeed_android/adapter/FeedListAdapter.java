@@ -18,6 +18,7 @@ import io.github.abhirojp.myfeed_android.R;
 import io.github.abhirojp.myfeed_android.callback.OnFeedItemClick;
 import io.github.abhirojp.myfeed_android.data.DataModel;
 
+import static io.github.abhirojp.myfeed_android.Utility.checkValue;
 import static io.github.abhirojp.myfeed_android.Utility.requestImage;
 
 /**
@@ -89,7 +90,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
             child_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
             requestImage(child_image, item.getImageUrl());
             LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(200, 200);
+            LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(300, 200);
             if (holder.child.getChildCount() == 1)
                 holder.child.addView(child_image, 0, lp2);
             else
@@ -113,10 +114,6 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
                 onFeedItemClick.passData(dataList.get(position));
             }
         });
-    }
-
-    private boolean checkValue(String text) {
-    return text!=null && text.length()>0;
     }
 
     @Override

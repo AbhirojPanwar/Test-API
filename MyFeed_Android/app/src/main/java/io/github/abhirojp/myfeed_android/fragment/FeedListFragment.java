@@ -37,6 +37,8 @@ public class FeedListFragment extends Fragment {
     private FeedListAdapter listAdapter;
     private ArrayList<DataModel> dataList;
     private Bundle instanceState;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
 
     public static FeedListFragment newInstance() {
         FeedListFragment listFragment = new FeedListFragment();
@@ -85,7 +87,7 @@ public class FeedListFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<ArrayList<DataModel>> call, Throwable t) {
-
+                    // show empty  view  or remaining list
                 }
             });
         } else {
@@ -99,15 +101,17 @@ public class FeedListFragment extends Fragment {
         }
     }
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_feedlist,container,false);
-        RecyclerView recyclerView=view.findViewById(R.id.recyclable_list);
+        recyclerView = view.findViewById(R.id.recyclable_list);
         listAdapter=new FeedListAdapter(view.getContext());
         recyclerView.setAdapter(listAdapter);
         listAdapter.notifyDataSetChanged();
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        layoutManager = new LinearLayoutManager(view.getContext());
+        recyclerView.setLayoutManager(layoutManager);
         return view;
     }
 
