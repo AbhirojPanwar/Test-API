@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="item_padding">10dp</dimen>
+    <dimen name="item_padding">5dp</dimen>
+    <dimen name="item_padding_small">2.5dp</dimen>
     <dimen name="mark_button_width">80dp</dimen>
     <dimen name="element_padding">5dp</dimen>
     <dimen name="button_text_pad">30dp</dimen>
     <dimen name="list_item_gap">5dp</dimen>
     <dimen name="material_elevation">4dp</dimen>
+    <dimen name="dividr_width">2dp</dimen>
+    <dimen name="item_padding_top">10dp</dimen>
 </resources>

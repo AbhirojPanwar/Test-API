@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="@dimen/item_padding"
-    android:layout_margin="@dimen/list_item_gap"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/list_item_gap"
+    android:layout_marginLeft="@dimen/list_item_gap"
+    android:layout_marginRight="@dimen/list_item_gap"
+    android:layout_marginStart="@dimen/list_item_gap"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/api_title"
-        android:text="@string/placeholder_text"
-        android:textAppearance="?android:attr/textAppearanceListItemSecondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/item_padding"
+        android:paddingTop="@dimen/item_padding"
+        android:text="@string/placeholder_text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         tools:targetApi="lollipop" />
 
     <LinearLayout
         android:id="@+id/linLayout"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-<!--        <ImageView
-            android:id="@+id/api_imageUrl"
-            android:scaleType="fitEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/api_text"
-        android:text="@string/placeholder_text"
-        android:paddingTop="@dimen/element_padding"
-        android:paddingBottom="@dimen/element_padding"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />-->
+        <!-- Children will be added via adapter -->
 
     </LinearLayout>
 
@@ -47,18 +40,24 @@
         android:layout_width="@dimen/mark_button_width"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:text="LIKE"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
          />
 
         <TextView
             android:id="@+id/api_name"
-            android:text="@string/from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/button_text_pad"
             android:layout_marginStart="@dimen/button_text_pad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="@string/from" />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dividr_width"
+        android:layout_marginTop="@dimen/item_padding_top"
+        android:background="?android:attr/dividerHorizontal" />
 
 </LinearLayout>
