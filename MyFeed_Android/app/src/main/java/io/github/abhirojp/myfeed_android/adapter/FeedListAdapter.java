@@ -2,6 +2,8 @@ package io.github.abhirojp.myfeed_android.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -78,6 +80,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         return dataList;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Log.d(TAG,"creating an item for pos "+position);
@@ -124,6 +127,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         }
         if (checkValue(item.getText())) {
             TextView child_text = new TextView(getContext());
+            child_text.setTransitionName("TEXT_API");
             child_text.setId(R.id.child_text);
             child_text.setGravity(Gravity.CENTER_VERTICAL);
             if (checkValue(item.getImageUrl())) {
@@ -137,6 +141,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         }
         if (checkValue(item.getImageUrl())) {
             ImageView child_image = new ImageView(getContext());
+            child_image.setTransitionName("IMAGE_API");
             child_image.setId(R.id.child_image);
             child_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
             requestImage(child_image, item.getImageUrl());

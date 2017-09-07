@@ -1,8 +1,10 @@
 package io.github.abhirojp.myfeed_android.fragment;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -45,6 +47,8 @@ public class FeedDetailsFragment extends Fragment {
         fragtag.put(TAG,detailsFragment);
         return detailsFragment;
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, Bundle state) {
@@ -80,6 +84,7 @@ public class FeedDetailsFragment extends Fragment {
 
         if (checkValue(text)) {
             TextView view1 = new TextView(getContext());
+            view1.setTransitionName("TEXT_API");
             view1.setId(R.id.child_text);
             view1.setGravity(Gravity.CENTER_VERTICAL);
             view1.setTextAppearance(view.getContext(), android.R.style.TextAppearance_Large);
@@ -89,6 +94,7 @@ public class FeedDetailsFragment extends Fragment {
         }
         if (checkValue(imageUrl)) {
             ImageView view1 = new ImageView(getContext());
+            view1.setTransitionName("IMAGE_API");
             view1.setId(R.id.child_image);
             view1.setPadding(5, 5, 5, 5);
             view1.setScaleType(ImageView.ScaleType.FIT_CENTER);

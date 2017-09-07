@@ -1,12 +1,17 @@
 package io.github.abhirojp.myfeed_android;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.animation.AccelerateInterpolator;
 
 import io.github.abhirojp.myfeed_android.callback.OnFeedItemClick;
 import io.github.abhirojp.myfeed_android.data.DataModel;
@@ -65,7 +70,29 @@ public class MainActivity extends AppCompatActivity implements OnFeedItemClick{
     public void passData(DataModel d) {
         Log.d(TAG,"Display Details");
         FeedDetailsFragment detailsFragment=FeedDetailsFragment.newInstance(d);
-        getSupportFragmentManager().beginTransaction().replace(R.id.feed_container,detailsFragment,FeedDetailsFragment.TAG).addToBackStack(FeedDetailsFragment.TAG).commit();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Transition t1 = TransitionInflater.from(this).inflateTransition(android.R.transition.slide_left);
+            Transition t2 = TransitionInflater.from(this).inflateTransition(android.R.transition.slide_right);
+            t2.setInterpolator(new AccelerateInterpolator());
+            t1.setInterpolator(new AccelerateInterpolator());
+            detailsFragment.setEnterTransition(t1);
+            FeedListFragment listFragment = (FeedListFragment) fragtag.get(FeedListFragment.TAG);
+            listFragment.setExitTransition(t2);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.feed_container, detailsFragment, FeedDetailsFragment.TAG)
+                    .addToBackStack(FeedDetailsFragment.TAG);
+            if (d.getImageUrl() != null || d.getImageUrl().length() > 0) {
+                ft.addSharedElement(listFragment.getView().findViewById(R.id.child_image), "IMAGE_API");
+            }
+            if (d.getText() != null || d.getText().length() > 0) {
+                ft.addSharedElement(listFragment.getView().findViewById(R.id.child_text), "TEXT_API");
+            }
+            ft.commit();
+
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.feed_container, detailsFragment, FeedDetailsFragment.TAG).addToBackStack(FeedDetailsFragment.TAG).commit();
+        }
+
     }
     
 }
