@@ -12,13 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 import io.github.abhirojp.myfeed_android.R;
 import io.github.abhirojp.myfeed_android.callback.OnFeedItemClick;
 import io.github.abhirojp.myfeed_android.data.DataModel;
+
+import static io.github.abhirojp.myfeed_android.Utility.requestImage;
 
 /**
  * Created by abhiroj on 6/9/17.
@@ -113,13 +113,6 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
                 onFeedItemClick.passData(dataList.get(position));
             }
         });
-    }
-
-
-    private void requestImage(ImageView target, String imageUrl) {
-    Picasso p=Picasso.with(getContext());
-        p.setIndicatorsEnabled(true);
-        p.load(imageUrl).placeholder(getContext().getResources().getDrawable(R.drawable.placeholder)).into(target);
     }
 
     private boolean checkValue(String text) {

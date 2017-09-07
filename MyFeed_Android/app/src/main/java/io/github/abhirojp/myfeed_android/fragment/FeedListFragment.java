@@ -47,14 +47,21 @@ public class FeedListFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (dataList != null || dataList.size() > 0)
+        if (getList() != null || getList().size() > 0)
             outState.putSerializable(KEY_DATA, dataList);
     }
+
+    private ArrayList<DataModel> getList() {
+        if (dataList == null) {
+            dataList = new ArrayList<>();
+        }
+        return dataList;
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         this.instanceState = savedInstanceState;
     }
 
