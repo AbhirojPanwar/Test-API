@@ -77,6 +77,12 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Log.d(TAG,"creating an item for pos "+position);
         final DataModel item=getList().get(position);
+        FrameLayout frameLayout = new FrameLayout(getContext());
+        frameLayout.setId(R.id.time_club);
+        frameLayout.setBackgroundColor(Color.LTGRAY);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        frameLayout.setLayoutParams(params);
+
         // This is because recycler view tries to recycle the previous holder. This can be the reason of  irrelevant drawing of frame layouts or(presence of past draw)
         // This code ensures that if there is a frame layout then it must be removed and drawn only if satisfies the condition.
         if (holder.rootView.findViewById(R.id.time_club) != null) {
@@ -84,23 +90,26 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
             root.removeView(holder.rootView.findViewById(R.id.time_club));
         }
         if ((position == 0 || item.getTime().compareTo(getList().get(position - 1).getTime()) >= 1)) {
-            FrameLayout frameLayout = new FrameLayout(getContext());
-            frameLayout.setId(R.id.time_club);
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            frameLayout.setBackgroundColor(Color.GRAY);
-            frameLayout.setLayoutParams(params);
             TextView time = new TextView(getContext());
-            time.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
+            time.setTextAppearance(getContext(), android.R.style.TextAppearance_Small);
             time.setText(item.getTime() + "");
-            time.setPadding(5, 0, 0, 0);
+            time.setPadding(10, 12, 12, 12);
             time.setTextColor(Color.BLACK);
             frameLayout.addView(time, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            LinearLayout root = (LinearLayout) holder.rootView;
-            root.addView(frameLayout, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        } else {
+            View horizontalDivider = new View(getContext());
+            horizontalDivider.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 4));
+            frameLayout.addView(horizontalDivider);
         }
+
+        LinearLayout root = (LinearLayout) holder.rootView;
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        if (position > 0) layoutParams.setMargins(0, 10, 0, 0);
+        root.addView(frameLayout, 0, layoutParams);
+
         holder.api_title.setText(item.getTitle());
         holder.api_name.setText(item.getName());
-        // If this is not used, Data shown in list breaks and gets unorderly.
+
         if (holder.child.findViewById(R.id.child_text) != null) {
             holder.child.removeView(holder.child.findViewById(R.id.child_text));
         }
@@ -111,7 +120,11 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
             TextView child_text = new TextView(getContext());
             child_text.setId(R.id.child_text);
             child_text.setGravity(Gravity.CENTER_VERTICAL);
-            child_text.setTextAppearance(getContext(), android.R.style.TextAppearance_Large);
+            if (checkValue(item.getImageUrl())) {
+                child_text.setTextAppearance(getContext(), android.R.style.TextAppearance_Small);
+            } else {
+                child_text.setTextAppearance(getContext(), android.R.style.TextAppearance_Large);
+            }
             child_text.setPadding(5, 5, 5, 5);
             child_text.setText(item.getText());
             holder.child.addView(child_text, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));

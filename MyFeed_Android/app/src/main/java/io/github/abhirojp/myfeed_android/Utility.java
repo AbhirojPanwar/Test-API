@@ -13,7 +13,6 @@ public class Utility {
     public static void requestImage(ImageView target, String imageUrl) {
         if (imageUrl != null && imageUrl.length() > 0) {
             Picasso p = Picasso.with(target.getContext());
-            p.setIndicatorsEnabled(true);
             p.load(imageUrl).placeholder(target.getContext().getResources().getDrawable(R.drawable.placeholder)).into(target);
         }
     }

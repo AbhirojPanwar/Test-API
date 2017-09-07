@@ -4,13 +4,18 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/five"
-    android:layout_marginLeft="@dimen/five"
-    android:layout_marginRight="@dimen/five"
-    android:layout_marginStart="@dimen/five"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/five"
+        android:layout_marginLeft="@dimen/five"
+        android:layout_marginRight="@dimen/five"
+        android:layout_marginStart="@dimen/five"
+        android:orientation="vertical">
+
+        <TextView
         android:id="@+id/api_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,10 +59,7 @@
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dividr_width"
-        android:layout_marginTop="@dimen/ten"
-        android:background="?android:attr/dividerHorizontal" />
+    </LinearLayout>
+
 
 </LinearLayout>
