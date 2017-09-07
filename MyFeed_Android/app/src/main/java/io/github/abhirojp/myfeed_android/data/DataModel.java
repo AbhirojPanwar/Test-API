@@ -20,6 +20,8 @@ public class DataModel implements Serializable {
 
     private String description;
 
+    private int pos;
+
     public String getName() {
         return name;
     }
@@ -66,5 +68,13 @@ public class DataModel implements Serializable {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
     }
 }

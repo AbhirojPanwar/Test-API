@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import io.github.abhirojp.myfeed_android.R;
+import io.github.abhirojp.myfeed_android.asynctasks.TaskDelete;
+import io.github.abhirojp.myfeed_android.asynctasks.TaskInsert;
 import io.github.abhirojp.myfeed_android.callback.OnFeedItemClick;
 import io.github.abhirojp.myfeed_android.data.DataModel;
 
@@ -77,6 +79,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Log.d(TAG,"creating an item for pos "+position);
         final DataModel item=getList().get(position);
+        item.setPos(position);
         FrameLayout frameLayout = new FrameLayout(getContext());
         frameLayout.setId(R.id.time_club);
         frameLayout.setBackgroundColor(Color.LTGRAY);
@@ -147,9 +150,9 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
             public void onClick(View view) {
                 // TODO: Database operations using Async Task
                 if(holder.markButton.getText().equals("LIKE")){
-                    holder.markButton.setText("UNLIKE");
+                    new TaskInsert(holder.markButton).execute(item, null);
                 }else{
-                    holder.markButton.setText("LIKE");
+                    new TaskDelete(holder.markButton).execute(item, null);
                 }
             }
         });
