@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -78,14 +77,12 @@ public class FeedListFragment extends Fragment {
 
         if (instanceState == null || instanceState.getSerializable(KEY_DATA) == null) {
             // Make a fresh query
-            Log.d(TAG, "Making fresh call to " + BASE_URL);
             Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
             MyBackendAPI myBackendAPI = retrofit.create(MyBackendAPI.class);
             Call<ArrayList<DataModel>> call = myBackendAPI.loadData();
             call.enqueue(new Callback<ArrayList<DataModel>>() {
                 @Override
                 public void onResponse(Call<ArrayList<DataModel>> call, Response<ArrayList<DataModel>> response) {
-                    Log.d(TAG, "Retrofit on Response : -- > " + response.message() + " size is " + response.body().size());
                     dataList = response.body();
                     listAdapter.addAPIData(dataList);
                 }
@@ -96,7 +93,6 @@ public class FeedListFragment extends Fragment {
                 }
             });
         } else {
-            Log.d(TAG, "Using Instance state");
             if (listAdapter != null) {
                 dataList = (ArrayList<DataModel>) instanceState.getSerializable(KEY_DATA);
                 if (dataList != null || dataList.size() > 0) {

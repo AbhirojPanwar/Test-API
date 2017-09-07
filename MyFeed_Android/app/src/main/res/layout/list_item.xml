@@ -45,7 +45,6 @@
         android:layout_width="@dimen/mark_button_width"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="LIKE"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
          />
 

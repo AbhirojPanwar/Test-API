@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +39,6 @@ public class FeedDetailsFragment extends Fragment {
 
     public static FeedDetailsFragment newInstance(DataModel data){
         FeedDetailsFragment detailsFragment=new FeedDetailsFragment();
-        Log.d(TAG, "Is Data Null? " + ((data == null) ? "Yes" : "No") + " For example: name is " + data.getName());
         Bundle bundle=new Bundle();
         bundle.putSerializable(KEY_MODEL, data);
         detailsFragment.setArguments(bundle);

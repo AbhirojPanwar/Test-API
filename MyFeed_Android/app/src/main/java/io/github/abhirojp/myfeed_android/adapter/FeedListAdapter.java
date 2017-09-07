@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +44,6 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
     private OnFeedItemClick onFeedItemClick;
 
     public FeedListAdapter(Context context){
-        Log.d(TAG,"Initalizing");
         this.context=context;
         onFeedItemClick=(OnFeedItemClick) context;
     }
@@ -67,9 +65,6 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
                 return dataModel.getTime().compareTo(t1.getTime());
             }
         });
-        for (DataModel e : dataList) {
-            Log.d(TAG, "Time sort:" + e.getTime() + " Name: " + e.getName());
-        }
         notifyDataSetChanged();
     }
 
@@ -83,7 +78,6 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Log.d(TAG,"creating an item for pos "+position);
         final DataModel item=getList().get(position);
         item.setPos(position);
         FrameLayout frameLayout = new FrameLayout(getContext());

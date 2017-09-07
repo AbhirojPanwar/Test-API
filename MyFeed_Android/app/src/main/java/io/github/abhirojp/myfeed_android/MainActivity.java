@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.animation.AccelerateInterpolator;
 
 import io.github.abhirojp.myfeed_android.callback.OnFeedItemClick;
@@ -68,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements OnFeedItemClick{
 
     @Override
     public void passData(DataModel d) {
-        Log.d(TAG,"Display Details");
         FeedDetailsFragment detailsFragment=FeedDetailsFragment.newInstance(d);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Transition t1 = TransitionInflater.from(this).inflateTransition(android.R.transition.slide_left);
