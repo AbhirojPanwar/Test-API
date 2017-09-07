@@ -46,8 +46,8 @@ public class DataModel implements Serializable {
         this.title = title;
     }
 
-    public String getTime() {
-        return time;
+    public long getTime() {
+        return Long.parseLong(time);
     }
 
     public void setTime(String time) {

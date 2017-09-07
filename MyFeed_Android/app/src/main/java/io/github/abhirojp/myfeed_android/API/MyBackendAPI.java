@@ -1,5 +1,6 @@
 package io.github.abhirojp.myfeed_android.API;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.abhirojp.myfeed_android.data.DataModel;
@@ -13,6 +14,6 @@ import retrofit2.http.GET;
 public interface MyBackendAPI {
 
     @GET("?format=json")
-    Call<List<DataModel>> loadData();
+    Call<ArrayList<DataModel>> loadData();
 
 }

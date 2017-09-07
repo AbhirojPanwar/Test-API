@@ -1,6 +1,8 @@
 package io.github.abhirojp.myfeed_android.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,8 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import io.github.abhirojp.myfeed_android.R;
@@ -46,26 +53,55 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
     }
 
     public void addAPIData(ArrayList<DataModel> d){
-        if(dataList!=null) dataList.clear();
-        dataList.addAll(d);
+        getList().clear();
+        getList().addAll(d);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<DataModel> getList(){
+        if(dataList==null){
+            dataList=new ArrayList<>();
+        }
+        return dataList;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Log.d(TAG,"creating an item for pos "+position);
-        final DataModel item=dataList.get(position);
+        final DataModel item=getList().get(position);
         holder.api_title.setText(item.getTitle());
         holder.api_name.setText(item.getName());
-        if (item.getText()!=null) {
-            holder.api_text.setText(item.getText());
-        } else {
-            holder.api_text.setVisibility(GONE);
-        }
-        if(item.getImageUrl()!=null){
-            // TODO: fetch image using Picasso API
-        }else{
-            holder.api_imageUrl.setVisibility(GONE);
+        if(checkValue(item.getImageUrl())){
+            final ImageView imageView=new ImageView(getContext());
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            if(checkValue(item.getText()))
+            holder.child.addView(imageView,new ViewGroup.LayoutParams(200, ViewGroup.LayoutParams.WRAP_CONTENT));
+            else{
+                holder.child.addView(imageView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
+            Target target=new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    imageView.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                }
+            };
+            if(imageView.getDrawable()==null)
+            requestImage(target,item.getImageUrl());
+        }if(checkValue(item.getText())){
+            TextView view1=new TextView(getContext());
+            view1.setTextAppearance(getContext(),android.R.style.TextAppearance_Large);
+            view1.setPadding(5,5,5,5);
+            holder.child.addView(view1,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         holder.markButton.setOnClickListener(new View.OnClickListener() {
             //TODO: Backend API operations
@@ -86,9 +122,19 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         });
     }
 
+    private void requestImage(Target target,String imageUrl) {
+    Picasso p=Picasso.with(getContext());
+        p.setDebugging(true);
+        p.load(imageUrl).into(target);
+    }
+
+    private boolean checkValue(String text) {
+    return text!=null && text.length()>0;
+    }
+
     @Override
     public int getItemCount() {
-        return dataList.size();
+        return getList().size();
     }
 
     public Context getContext() {
@@ -98,20 +144,18 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView api_title;
-        public ImageView api_imageUrl;
-        public TextView api_text;
         public TextView api_name;
         public Button markButton;
         public View rootView;
+        public LinearLayout child;
 
         public ViewHolder(View itemView) {
             super(itemView);
             rootView=itemView;
-            api_imageUrl=itemView.findViewById(R.id.api_imageUrl);
             api_title=itemView.findViewById(R.id.api_title);
-            api_text=itemView.findViewById(R.id.api_text);
             api_name=itemView.findViewById(R.id.api_name);
             markButton=itemView.findViewById(R.id.api_mark);
+            child=itemView.findViewById(R.id.linLayout);
         }
     }
 }

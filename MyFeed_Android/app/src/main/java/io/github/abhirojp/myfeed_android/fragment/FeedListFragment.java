@@ -24,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static io.github.abhirojp.myfeed_android.data.Constants.baseUrl;
 import static io.github.abhirojp.myfeed_android.data.Constants.fragtag;
@@ -41,20 +42,20 @@ public class FeedListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Retrofit retrofit=new Retrofit.Builder().baseUrl(baseUrl).build();
+        Retrofit retrofit=new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build();
 
         MyBackendAPI myBackendAPI=retrofit.create(MyBackendAPI.class);
-
-        Call<List<DataModel>> request=myBackendAPI.loadData();
-        request.enqueue(new Callback<List<DataModel>>() {
+        Call<ArrayList<DataModel>> call=myBackendAPI.loadData();
+        call.enqueue(new Callback<ArrayList<DataModel>>() {
             @Override
-            public void onResponse(Call<List<DataModel>> call, Response<List<DataModel>> response) {
-                Log.d(TAG,response.message());
+            public void onResponse(Call<ArrayList<DataModel>> call, Response<ArrayList<DataModel>> response) {
+                Log.d(TAG,"Retrofit on Response : -- > "+response.message()+" size is "+response.body().size());
+                listAdapter.addAPIData(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<DataModel>> call, Throwable t) {
-                Log.e(TAG,t.getMessage());
+            public void onFailure(Call<ArrayList<DataModel>> call, Throwable t) {
+
             }
         });
     }
