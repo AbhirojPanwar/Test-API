@@ -104,7 +104,7 @@ public class FeedListFragment extends Fragment {
         return view;
     }
 
-    private ArrayList<DataModel> getFakeData() {
+/*    private ArrayList<DataModel> getFakeData() {
         Log.d(TAG,"creating list");
     // TODO: parse Fake Data as a JSON
         ArrayList<DataModel> parsedList=new ArrayList<>();
@@ -117,5 +117,5 @@ public class FeedListFragment extends Fragment {
             parsedList.add(model);
         }
         return parsedList;
-    }
+    }*/
 }

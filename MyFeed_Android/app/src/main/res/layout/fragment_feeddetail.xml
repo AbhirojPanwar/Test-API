@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/detail_title"/>
+        android:background="@android:color/darker_gray">
+
+        <TextView
+            android:id="@+id/detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,8 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:layout_width="wrap_content"
             android:id="@+id/detail_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -32,16 +42,16 @@
             android:layout_width="@dimen/mark_button_width"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:text="LIKE"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
             />
 
         <TextView
             android:id="@+id/detail_name"
-            android:layout_marginLeft="@dimen/button_text_pad"
-            android:layout_marginStart="@dimen/button_text_pad"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/button_text_pad"
+            android:layout_marginStart="@dimen/button_text_pad" />
 
     </LinearLayout>
 

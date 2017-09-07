@@ -1,10 +1,10 @@
 package io.github.abhirojp.myfeed_android;
 
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements OnFeedItemClick{
     @Override
     public void passData(DataModel d) {
         Log.d(TAG,"Display Details");
-    //TODO: Dispay Details Screen
         FeedDetailsFragment detailsFragment=FeedDetailsFragment.newInstance(d);
         getSupportFragmentManager().beginTransaction().replace(R.id.feed_container,detailsFragment,FeedDetailsFragment.TAG).addToBackStack(FeedDetailsFragment.TAG).commit();
     }

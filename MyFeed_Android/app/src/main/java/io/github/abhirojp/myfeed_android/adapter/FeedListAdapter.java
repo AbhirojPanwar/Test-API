@@ -60,7 +60,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         Log.d(TAG,"creating an item for pos "+position);
         final DataModel item=getList().get(position);
         holder.api_title.setText(item.getTitle());
@@ -99,6 +99,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
             //TODO: Backend API operations
             @Override
             public void onClick(View view) {
+                // TODO: Database operations using Async Task
                 if(holder.markButton.getText().equals("LIKE")){
                     holder.markButton.setText("UNLIKE");
                 }else{
@@ -109,7 +110,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onFeedItemClick.passData(item);
+                onFeedItemClick.passData(dataList.get(position));
             }
         });
     }
