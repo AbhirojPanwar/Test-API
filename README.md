@@ -27,7 +27,7 @@ Database:- Sqlite3
     #2 make sure your mobile device and workstation are connected to same network
     #3 Install the apk and run the app
     
-### Admin Acess
+### View Endpoints
     After running the project, use the same IP (192.168.0.104:8000) to view the endpoints
     
     
