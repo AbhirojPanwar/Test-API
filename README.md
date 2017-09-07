@@ -23,7 +23,7 @@ Database:- Sqlite3
     #1 pip install -r requirements.txt
     
 ### Run project
-    #1 python3 manage.py runserver 192.168.0.104:8000
+    #1 python manage.py runserver 192.168.0.104:8000
     #2 After running the project , put the same IP address on yur browser to view the endpoints
     
 ### Run Android App
