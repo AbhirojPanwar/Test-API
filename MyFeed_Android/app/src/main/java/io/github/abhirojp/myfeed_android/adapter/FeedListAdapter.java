@@ -1,6 +1,7 @@
 package io.github.abhirojp.myfeed_android.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -8,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import io.github.abhirojp.myfeed_android.R;
 import io.github.abhirojp.myfeed_android.callback.OnFeedItemClick;
@@ -50,6 +54,15 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
     public void addAPIData(ArrayList<DataModel> d){
         getList().clear();
         getList().addAll(d);
+        Collections.sort(getList(), new Comparator<DataModel>() {
+            @Override
+            public int compare(DataModel dataModel, DataModel t1) {
+                return dataModel.getTime().compareTo(t1.getTime());
+            }
+        });
+        for (DataModel e : dataList) {
+            Log.d(TAG, "Time sort:" + e.getTime() + " Name: " + e.getName());
+        }
         notifyDataSetChanged();
     }
 
@@ -64,6 +77,27 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Log.d(TAG,"creating an item for pos "+position);
         final DataModel item=getList().get(position);
+        // This is because recycler view tries to recycle the previous holder. This can be the reason of  irrelevant drawing of frame layouts or(presence of past draw)
+        // This code ensures that if there is a frame layout then it must be removed and drawn only if satisfies the condition.
+        if (holder.rootView.findViewById(R.id.time_club) != null) {
+            LinearLayout root = (LinearLayout) holder.rootView;
+            root.removeView(holder.rootView.findViewById(R.id.time_club));
+        }
+        if ((position == 0 || item.getTime().compareTo(getList().get(position - 1).getTime()) >= 1)) {
+            FrameLayout frameLayout = new FrameLayout(getContext());
+            frameLayout.setId(R.id.time_club);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            frameLayout.setBackgroundColor(Color.GRAY);
+            frameLayout.setLayoutParams(params);
+            TextView time = new TextView(getContext());
+            time.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
+            time.setText(item.getTime() + "");
+            time.setPadding(5, 0, 0, 0);
+            time.setTextColor(Color.BLACK);
+            frameLayout.addView(time, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            LinearLayout root = (LinearLayout) holder.rootView;
+            root.addView(frameLayout, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
         holder.api_title.setText(item.getTitle());
         holder.api_name.setText(item.getName());
         // If this is not used, Data shown in list breaks and gets unorderly.
@@ -74,7 +108,6 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
             holder.child.removeView(holder.child.findViewById(R.id.child_image));
         }
         if (checkValue(item.getText())) {
-            Log.d(TAG, "Text For position " + position);
             TextView child_text = new TextView(getContext());
             child_text.setId(R.id.child_text);
             child_text.setGravity(Gravity.CENTER_VERTICAL);
@@ -84,7 +117,6 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
             holder.child.addView(child_text, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         if (checkValue(item.getImageUrl())) {
-            Log.d(TAG, "Image For position " + position);
             ImageView child_image = new ImageView(getContext());
             child_image.setId(R.id.child_image);
             child_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -111,7 +143,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onFeedItemClick.passData(dataList.get(position));
+                onFeedItemClick.passData(item);
             }
         });
     }
