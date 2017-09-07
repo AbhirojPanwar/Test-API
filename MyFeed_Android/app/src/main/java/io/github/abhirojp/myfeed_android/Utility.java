@@ -2,6 +2,7 @@ package io.github.abhirojp.myfeed_android;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -13,6 +14,8 @@ import io.github.abhirojp.myfeed_android.data.FeedContract;
  */
 
 public class Utility {
+
+    private static final String TAG = "UtilityClass";
 
     public static void requestImage(ImageView target, String imageUrl) {
         if (imageUrl != null && imageUrl.length() > 0) {
@@ -28,6 +31,16 @@ public class Utility {
     public static boolean checkIfFeedIsPresent(ContentResolver resolver, int pos) {
         Cursor cursor = resolver.query(FeedContract.FavoritesEntry.CONTENT_URI, new String[]{FeedContract.FavoritesEntry.UID_POS}, FeedContract.FavoritesEntry.UID_POS + "=?", new String[]{pos + ""},
                 null);
-        return cursor.getCount() > 0;
+        int res = cursor.getCount();
+        cursor.close();
+        return res > 0;
+    }
+
+    public static void feedPresent(Button b) {
+        b.setText("UNLIKE");
+    }
+
+    public static void feedNotPresent(Button b) {
+        b.setText("LIKE");
     }
 }

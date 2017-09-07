@@ -3,7 +3,6 @@ package io.github.abhirojp.myfeed_android.asynctasks;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.widget.Button;
 
@@ -11,6 +10,7 @@ import io.github.abhirojp.myfeed_android.data.DataModel;
 import io.github.abhirojp.myfeed_android.data.FeedContract;
 
 import static io.github.abhirojp.myfeed_android.Utility.checkIfFeedIsPresent;
+import static io.github.abhirojp.myfeed_android.Utility.feedPresent;
 
 /**
  * Created by abhiroj on 7/9/17.
@@ -31,9 +31,7 @@ public class TaskInsert extends AsyncTask<DataModel, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if (aBoolean) {
-            mark.setText("UNLIKE");
-            mark.setTextColor(Color.GRAY);
-            mark.setBackgroundColor(Color.BLUE);
+            feedPresent(mark);
         }
     }
 

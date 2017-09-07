@@ -24,7 +24,10 @@ import io.github.abhirojp.myfeed_android.asynctasks.TaskInsert;
 import io.github.abhirojp.myfeed_android.callback.OnFeedItemClick;
 import io.github.abhirojp.myfeed_android.data.DataModel;
 
+import static io.github.abhirojp.myfeed_android.Utility.checkIfFeedIsPresent;
 import static io.github.abhirojp.myfeed_android.Utility.checkValue;
+import static io.github.abhirojp.myfeed_android.Utility.feedNotPresent;
+import static io.github.abhirojp.myfeed_android.Utility.feedPresent;
 import static io.github.abhirojp.myfeed_android.Utility.requestImage;
 
 /**
@@ -144,6 +147,11 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
             else
                 holder.child.addView(child_image, 0, lp1);
         }
+        if (checkIfFeedIsPresent(getContext().getContentResolver(), item.getPos())) {
+            feedPresent(holder.markButton);
+        } else {
+            feedNotPresent(holder.markButton);
+        }
         holder.markButton.setOnClickListener(new View.OnClickListener() {
             //TODO: Backend API operations
             @Override
@@ -163,6 +171,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
             }
         });
     }
+
 
     @Override
     public int getItemCount() {

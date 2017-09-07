@@ -2,12 +2,13 @@ package io.github.abhirojp.myfeed_android.asynctasks;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.widget.Button;
 
 import io.github.abhirojp.myfeed_android.data.DataModel;
 import io.github.abhirojp.myfeed_android.data.FeedContract;
+
+import static io.github.abhirojp.myfeed_android.Utility.feedNotPresent;
 
 /**
  * Created by abhiroj on 7/9/17.
@@ -36,9 +37,7 @@ public class TaskDelete extends AsyncTask<DataModel, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if (aBoolean) {
-            mark.setText("LIKE");
-            mark.setTextColor(Color.BLUE);
-            mark.setBackgroundColor(Color.GRAY);
+            feedNotPresent(mark);
         }
     }
 }

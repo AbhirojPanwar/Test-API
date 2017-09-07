@@ -9,14 +9,20 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import io.github.abhirojp.myfeed_android.R;
+import io.github.abhirojp.myfeed_android.asynctasks.TaskDelete;
+import io.github.abhirojp.myfeed_android.asynctasks.TaskInsert;
 import io.github.abhirojp.myfeed_android.data.DataModel;
 
+import static io.github.abhirojp.myfeed_android.Utility.checkIfFeedIsPresent;
 import static io.github.abhirojp.myfeed_android.Utility.checkValue;
+import static io.github.abhirojp.myfeed_android.Utility.feedNotPresent;
+import static io.github.abhirojp.myfeed_android.Utility.feedPresent;
 import static io.github.abhirojp.myfeed_android.Utility.requestImage;
 import static io.github.abhirojp.myfeed_android.data.Constants.fragtag;
 
@@ -28,23 +34,13 @@ public class FeedDetailsFragment extends Fragment {
 
 
     public static final String TAG = FeedDetailsFragment.class.getSimpleName();
-    private static String KEY_NAME = "1";
-    private static String KEY_TEXT = "2";
-    private static String KEY_IMAGEURL = "3";
-    private static String KEY_TITLE = "4";
-    private static String KEY_TIME = "5";
-    private static String KEY_DESC = "6";
+    private static final String KEY_MODEL = "1";
 
     public static FeedDetailsFragment newInstance(DataModel data){
         FeedDetailsFragment detailsFragment=new FeedDetailsFragment();
         Log.d(TAG, "Is Data Null? " + ((data == null) ? "Yes" : "No") + " For example: name is " + data.getName());
         Bundle bundle=new Bundle();
-        bundle.putString(KEY_NAME, data.getName());
-        bundle.putString(KEY_TEXT, data.getText());
-        bundle.putString(KEY_IMAGEURL, data.getImageUrl());
-        bundle.putString(KEY_TITLE, data.getTitle());
-        bundle.putLong(KEY_TIME, data.getTime());
-        bundle.putString(KEY_DESC, data.getDescription());
+        bundle.putSerializable(KEY_MODEL, data);
         detailsFragment.setArguments(bundle);
         fragtag.put(TAG,detailsFragment);
         return detailsFragment;
@@ -54,12 +50,33 @@ public class FeedDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, Bundle state) {
         //TODO: transitions
         View view = inflater.inflate(R.layout.fragment_feeddetail, parent, false);
+
+        final DataModel model = (DataModel) getArguments().getSerializable(KEY_MODEL);
+
         TextView detail_title=view.findViewById(R.id.detail_title);
         TextView detail_name=view.findViewById(R.id.detail_name);
         TextView detail_desc=view.findViewById(R.id.detail_desc);
         LinearLayout container1 = view.findViewById(R.id.detail_group1);
-        String text = getArguments().getString(KEY_TEXT);
-        String imageUrl = getArguments().getString(KEY_IMAGEURL);
+        final Button api_mark = view.findViewById(R.id.api_mark);
+        String text = model.getText();
+        String imageUrl = model.getImageUrl();
+        if (checkIfFeedIsPresent(getContext().getContentResolver(), model.getPos())) {
+            feedPresent(api_mark);
+        } else {
+            feedNotPresent(api_mark);
+        }
+
+        api_mark.setOnClickListener(new View.OnClickListener() {
+            //TODO: Backend API operations
+            @Override
+            public void onClick(View view) {
+                if (api_mark.getText().equals("LIKE")) {
+                    new TaskInsert(api_mark).execute(model, null);
+                } else {
+                    new TaskDelete(api_mark).execute(model, null);
+                }
+            }
+        });
 
         if (checkValue(text)) {
             TextView view1 = new TextView(getContext());
@@ -85,9 +102,9 @@ public class FeedDetailsFragment extends Fragment {
         }
 
 
-        detail_title.setText(getArguments().getString(KEY_TITLE));
-        detail_name.setText(getArguments().getString(KEY_NAME));
-        detail_desc.setText(getArguments().getString(KEY_DESC));
+        detail_title.setText(model.getTitle());
+        detail_name.setText(model.getName());
+        detail_desc.setText(model.getDescription());
         return view;
     }
 }
