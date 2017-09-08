@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import io.github.abhirojp.myfeed_android.callback.OnFeedItemClick;
 import io.github.abhirojp.myfeed_android.data.DataModel;
@@ -45,7 +46,21 @@ public class MainActivity extends AppCompatActivity implements OnFeedItemClick{
                 fragmentManager.beginTransaction().add(R.id.feed_container, detailsFragment).addToBackStack(FeedDetailsFragment.TAG).commit();
             }
         }else{
-            fragmentManager.beginTransaction().add(R.id.feed_container, FeedListFragment.newInstance()).commit();
+            FeedListFragment listFragment = FeedListFragment.newInstance();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Transition t1 = TransitionInflater.from(this).inflateTransition(android.R.transition.fade);
+                Transition t2 = TransitionInflater.from(this).inflateTransition(android.R.transition.fade);
+                t1.setInterpolator(new DecelerateInterpolator());
+                t2.setInterpolator(new AccelerateInterpolator());
+                listFragment.setEnterTransition(t1);
+                listFragment.setExitTransition(t2);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction()
+                        .add(R.id.feed_container, listFragment);
+                ft.commit();
+
+            } else {
+                fragmentManager.beginTransaction().add(R.id.feed_container, listFragment).commit();
+            }
         }
     }
 
@@ -69,8 +84,11 @@ public class MainActivity extends AppCompatActivity implements OnFeedItemClick{
         FeedDetailsFragment detailsFragment=FeedDetailsFragment.newInstance(d);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Transition t1 = TransitionInflater.from(this).inflateTransition(android.R.transition.fade);
-            t1.setInterpolator(new AccelerateInterpolator());
+            Transition t2 = TransitionInflater.from(this).inflateTransition(android.R.transition.fade);
+            t1.setInterpolator(new DecelerateInterpolator());
+            t2.setInterpolator(new AccelerateInterpolator());
             detailsFragment.setEnterTransition(t1);
+            detailsFragment.setExitTransition(t2);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction()
                     .replace(R.id.feed_container, detailsFragment, FeedDetailsFragment.TAG)
                     .addToBackStack(FeedDetailsFragment.TAG);
