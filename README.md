@@ -10,6 +10,8 @@ Database:- Sqlite3
 
 ### Setup (or Activate) a virtual enviroment<br/>
     Steps mentioned in the django docs
+    (exemplary)
+    djangodev is the name of virtual environment in this case.
     
     #1 mkdir ~/.virtualenvs 
     #2 python3 -m venv ~/.virtualenvs/djangodev 
