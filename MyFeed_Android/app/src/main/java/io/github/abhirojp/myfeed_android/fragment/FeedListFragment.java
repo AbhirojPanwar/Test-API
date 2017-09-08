@@ -74,9 +74,12 @@ public class FeedListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        if (instanceState == null || instanceState.getSerializable(KEY_DATA) == null) {
-            // Make a fresh query
+        if (instanceState != null && instanceState.getSerializable(KEY_DATA) != null) {
+            dataList = (ArrayList<DataModel>) instanceState.getSerializable(KEY_DATA);
+            if (dataList != null || dataList.size() > 0) {
+                listAdapter.addAPIData(dataList);
+            }
+        } else {
             Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
             MyBackendAPI myBackendAPI = retrofit.create(MyBackendAPI.class);
             Call<ArrayList<DataModel>> call = myBackendAPI.loadData();
@@ -92,13 +95,6 @@ public class FeedListFragment extends Fragment {
                     // show empty  view  or remaining list
                 }
             });
-        } else {
-            if (listAdapter != null) {
-                dataList = (ArrayList<DataModel>) instanceState.getSerializable(KEY_DATA);
-                if (dataList != null || dataList.size() > 0) {
-                    listAdapter.addAPIData(dataList);
-                }
-            }
         }
     }
 

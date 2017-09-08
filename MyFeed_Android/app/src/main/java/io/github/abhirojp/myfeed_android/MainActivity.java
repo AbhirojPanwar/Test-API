@@ -22,7 +22,6 @@ import static io.github.abhirojp.myfeed_android.data.Constants.fragtag;
 
 public class MainActivity extends AppCompatActivity implements OnFeedItemClick{
 
-    private static final String TAG = MainActivity.class.getSimpleName();
     private FragmentManager fragmentManager;
 
 
@@ -40,10 +39,10 @@ public class MainActivity extends AppCompatActivity implements OnFeedItemClick{
             Fragment fragment=fragmentManager.getFragment(savedInstanceState,FRAGMENT_TAG);
             if(fragment instanceof FeedListFragment){
             FeedListFragment listFragment=(FeedListFragment) fragment;
-                fragmentManager.beginTransaction().replace(R.id.feed_container,listFragment).addToBackStack(FeedListFragment.TAG).commit();
+                fragmentManager.beginTransaction().add(R.id.feed_container, listFragment).addToBackStack(FeedListFragment.TAG).commit();
             }else if(fragment instanceof FeedDetailsFragment){
             FeedDetailsFragment detailsFragment=(FeedDetailsFragment) fragment;
-                fragmentManager.beginTransaction().replace(R.id.feed_container,detailsFragment).addToBackStack(FeedDetailsFragment.TAG).commit();
+                fragmentManager.beginTransaction().add(R.id.feed_container, detailsFragment).addToBackStack(FeedDetailsFragment.TAG).commit();
             }
         }else{
             fragmentManager.beginTransaction().add(R.id.feed_container, FeedListFragment.newInstance()).commit();
@@ -69,22 +68,12 @@ public class MainActivity extends AppCompatActivity implements OnFeedItemClick{
     public void passData(DataModel d) {
         FeedDetailsFragment detailsFragment=FeedDetailsFragment.newInstance(d);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Transition t1 = TransitionInflater.from(this).inflateTransition(android.R.transition.slide_left);
-            Transition t2 = TransitionInflater.from(this).inflateTransition(android.R.transition.slide_right);
-            t2.setInterpolator(new AccelerateInterpolator());
+            Transition t1 = TransitionInflater.from(this).inflateTransition(android.R.transition.fade);
             t1.setInterpolator(new AccelerateInterpolator());
             detailsFragment.setEnterTransition(t1);
-            FeedListFragment listFragment = (FeedListFragment) fragtag.get(FeedListFragment.TAG);
-            listFragment.setExitTransition(t2);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction()
                     .replace(R.id.feed_container, detailsFragment, FeedDetailsFragment.TAG)
                     .addToBackStack(FeedDetailsFragment.TAG);
-            if (d.getImageUrl() != null || d.getImageUrl().length() > 0) {
-                ft.addSharedElement(listFragment.getView().findViewById(R.id.child_image), "IMAGE_API");
-            }
-            if (d.getText() != null || d.getText().length() > 0) {
-                ft.addSharedElement(listFragment.getView().findViewById(R.id.child_text), "TEXT_API");
-            }
             ft.commit();
 
         } else {

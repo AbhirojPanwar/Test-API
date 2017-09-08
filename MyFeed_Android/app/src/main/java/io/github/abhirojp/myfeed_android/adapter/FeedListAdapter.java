@@ -37,7 +37,6 @@ import static io.github.abhirojp.myfeed_android.Utility.requestImage;
 
 public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHolder> {
 
-    private static final String TAG= FeedListAdapter.class.getSimpleName();
 
     private Context context;
     private ArrayList<DataModel> dataList;
@@ -152,10 +151,8 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
             feedNotPresent(holder.markButton);
         }
         holder.markButton.setOnClickListener(new View.OnClickListener() {
-            //TODO: Backend API operations
             @Override
             public void onClick(View view) {
-                // TODO: Database operations using Async Task
                 if(holder.markButton.getText().equals("LIKE")){
                     new TaskInsert(holder.markButton).execute(item, null);
                 }else{
@@ -181,7 +178,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         return context;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView api_title;
         public TextView api_name;
