@@ -1,5 +1,7 @@
 # My_Feed
 
+next steps - to containerize
+
 Backend:- Python3/Django
 
 Framework:- Django Rest Framework
